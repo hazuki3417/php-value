@@ -1,0 +1,27 @@
+{
+    "name": "hazuki3417/php-value",
+    "description": "Package that converts the value",
+    "type": "library",
+    "keywords": ["value", "date"],
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "takashi kudo",
+            "email": "hazuki3417@gmail.com",
+            "role": "Developer"
+        }
+    ],
+    "require": {
+        "php": ">=5.6"
+    },
+    "autoload": {
+        "psr-4": {
+            "Selen\\Value\\": "src"
+        }
+    },
+    "require-dev": {
+        "php": ">=5.6",
+        "phpunit/phpunit": "@stable",
+        "squizlabs/php_codesniffer": "@stable"
+    }
+}

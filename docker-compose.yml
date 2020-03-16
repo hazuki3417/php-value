@@ -1,0 +1,12 @@
+version: "3.0"
+
+services:
+  web:
+    hostname:  php-measurement
+    image: hazuki3417/ubuntu_nginx_php:latest
+    container_name: php-measurement
+    environment:
+      TZ: Asia/Tokyo
+    volumes:
+      - ./:/var/www
+    tty: true
