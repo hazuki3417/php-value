@@ -2,11 +2,13 @@ version: "3.0"
 
 services:
   web:
-    hostname:  php-measurement
+    hostname:  php-value
     image: hazuki3417/ubuntu_nginx_php:latest
-    container_name: php-measurement
+    container_name: php-value
     environment:
       TZ: Asia/Tokyo
+    ports:
+      - "80:80"
     volumes:
       - ./:/var/www
     tty: true
