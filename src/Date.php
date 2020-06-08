@@ -123,10 +123,10 @@ class Date
             preg_match('/^([0-9]{4})[-|\/|年]{1}([0-9]{1,2})[-|\/|月]{1}([0-9]{1,2})[日]?$/u', $ad_date, $match)
         ) {
             $ad_date_tmp = [
-                'year' => $match[1],
+                'year'  => $match[1],
                 'month' => $match[2],
-                'day' => $match[3],
-                'date' => $match[1] . $match[2] . $match[3],
+                'day'   => $match[3],
+                'date'  => $match[1] . $match[2] . $match[3],
             ];
         }
         return $ad_date_tmp;
@@ -150,10 +150,10 @@ class Date
         if (preg_match(sprintf($format, $gengo_name_find), $jp_date, $match)) {
             $date_tmp = [
                 'gengo' => $match[1],
-                'year' => $match[2],
+                'year'  => $match[2],
                 'month' => $match[3],
-                'day' => $match[4],
-                'date' => $match[2] . $match[3] . $match[4],
+                'day'   => $match[4],
+                'date'  => $match[2] . $match[3] . $match[4],
             ];
         }
         return $date_tmp;
@@ -166,7 +166,7 @@ class Date
      */
     public static function is_ad_date_format($ad_date)
     {
-        return (empty(self::split_ad_date($ad_date))) ? false : true;
+        return !empty(self::split_ad_date($ad_date));
     }
 
     /**
@@ -176,7 +176,7 @@ class Date
      */
     public static function is_jp_date_format($jp_date)
     {
-        return (empty(self::split_jp_date($jp_date))) ? false : true;
+        return !empty(self::split_jp_date($jp_date));
     }
 
     /**
@@ -187,11 +187,14 @@ class Date
     public static function valid_ad_date($ad_date)
     {
         $ad_date_tmp = self::split_ad_date($ad_date);
-        if (!empty($ad_date_tmp)) {
-            if (checkdate($ad_date_tmp['month'], $ad_date_tmp['day'], $ad_date_tmp['year'])) {
-                return $ad_date_tmp;
-            }
+        if (empty($ad_date_tmp)) {
+            return [];
         }
+
+        if (checkdate($ad_date_tmp['month'], $ad_date_tmp['day'], $ad_date_tmp['year'])) {
+            return $ad_date_tmp;
+        }
+
         return [];
     }
 
@@ -204,11 +207,12 @@ class Date
     public static function valid_jp_date($jp_date)
     {
         $date_tmp = self::split_jp_date($jp_date);
-        if (!empty($date_tmp)) {
-            //元号が適用された西暦年数と元号の和暦年数を加算
-            if (checkdate($date_tmp['month'], $date_tmp['day'], $date_tmp['year'])) {
-                return $date_tmp;
-            }
+        if (empty($date_tmp)) {
+            return [];
+        }
+        //元号が適用された西暦年数と元号の和暦年数を加算
+        if (checkdate($date_tmp['month'], $date_tmp['day'], $date_tmp['year'])) {
+            return $date_tmp;
         }
         return [];
     }
@@ -225,9 +229,9 @@ class Date
             preg_match('/^[午]?[前|後]?([0-9]{1,2})[時|:]{1}([0-9]{1,2})[分|:]{1}([0-9]{1,2})[秒]?$/u', $time, $match)
         ) {
             $time_tmp = [
-                'hour' => $match[1],
+                'hour'    => $match[1],
                 'minutes' => $match[2],
-                'second' => $match[3],
+                'second'  => $match[3],
             ];
         }
         return $time_tmp;
@@ -251,12 +255,12 @@ class Date
                     if (strtotime($gengo_record['end_date']) < $timestamp) {
                         continue;
                     }
-                    $gengo_tmp['name'] = $gengo_record['name'];
+                    $gengo_tmp['name']       = $gengo_record['name'];
                     $gengo_tmp['short_name'] = $gengo_record['short_name'];
-                    $end_date = (int)mb_substr($gengo_record['start_date'], 0, 4);
-                    $gengo_tmp['year'] = (string)($date_tmp['year'] - $end_date + 1);
-                    $gengo_tmp['month'] = $date_tmp['month'];
-                    $gengo_tmp['day'] = $date_tmp['day'];
+                    $end_date                = (int)mb_substr($gengo_record['start_date'], 0, 4);
+                    $gengo_tmp['year']       = (string)($date_tmp['year'] - $end_date + 1);
+                    $gengo_tmp['month']      = $date_tmp['month'];
+                    $gengo_tmp['day']        = $date_tmp['day'];
                     break;
                 }
                 return $gengo_tmp;
@@ -324,13 +328,13 @@ class Date
         $timestamp_tmp = empty($timestamp) ? time() : $timestamp;
         $datetime_split = explode('-', date('Y-m-d-h-m-s-w', $timestamp_tmp));
         $datetime_tmp = [
-            'year' => $datetime_split[0],
-            'month' => $datetime_split[1],
-            'day' => $datetime_split[2],
-            'hour' => $datetime_split[3],
+            'year'    => $datetime_split[0],
+            'month'   => $datetime_split[1],
+            'day'     => $datetime_split[2],
+            'hour'    => $datetime_split[3],
             'minutes' => $datetime_split[4],
-            'second' => $datetime_split[5],
-            'week' => self::$week_table[$datetime_split[6]],
+            'second'  => $datetime_split[5],
+            'week'    => self::$week_table[$datetime_split[6]],
         ];
         return $datetime_tmp;
     }
