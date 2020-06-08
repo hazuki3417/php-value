@@ -6,6 +6,7 @@ cache:
   paths:
     - vendor/
     - docs/coverage
+    - docs/phpdoc
 
 stages:
   - prepare
@@ -21,20 +22,34 @@ setting_composer:
     - php composer.phar install
     - php composer.phar dumpautoload
 
-test_php:
+unit_test:
   only:
     - master
   stage: test
   script: 
     - ./vendor/bin/phpunit -c ./phpunit.xml 
 
-coverage_php:
+coverage:
   only:
     - master
   stage: generate
   script:
     # php coverageを出力
+    - mkdir -pv ./docs/coverage
     - phpdbg -qrr ./vendor/bin/phpunit -c ./phpunit.xml
+
+documents_php:
+  only:
+    - master
+  stage: generate
+  script: 
+    # 出力先のディレクトリを作成
+    - mkdir -pv ./docs/phpdoc
+    # phpdocを出力
+    - ./vendor/bin/phpdoc run -d ./src -t ./docs/phpdoc
+    # git logを出力（デバッグ用）
+    # - git log --max-count=5
+
 
 save_documents:
   only:
