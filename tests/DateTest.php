@@ -35,40 +35,40 @@ class DateTest extends TestCase
     }
 
     /**
-     * @covers Selen\Date::getOneDaySecond
+     * @covers Selen\Date::one_day_second
      */
-    public function testGetOneDaySecond()
+    public function testone_day_second()
     {
         //値と型が同じかチェック
-        $this->assertSame(86400, Date::getOneDaySecond());
+        $this->assertSame(86400, Date::one_day_second());
     }
 
     /**
-     * @covers Selen\Date::getOneDayMinutes
+     * @covers Selen\Date::one_day_minutes
      */
-    public function testGetOneDayMinutes()
+    public function testone_day_minutes()
     {
         //値と型が同じかチェック
-        $this->assertSame(1440, Date::getOneDayMinutes());
+        $this->assertSame(1440, Date::one_day_minutes());
     }
 
     /**
-     * @covers Selen\Date::getOneDayHour
+     * @covers Selen\Date::one_day_hour
      */
-    public function testGetOneDayHour()
+    public function testone_day_hour()
     {
         //値と型が同じかチェック
-        $this->assertSame(24, Date::getOneDayHour());
+        $this->assertSame(24, Date::one_day_hour());
     }
 
     /**
-     * @covers Selen\Date::dateSplitSeireki
-     * @dataProvider valueCheckDateSplitSeireki
+     * @covers Selen\Date::split_ad_date
+     * @dataProvider valueChecksplit_ad_date
      */
-    public function testDateSplitSeireki($true_seireki, $false_seireki)
+    public function testSplit_ad_date($true_seireki, $false_seireki)
     {
         //正常系
-        $true_result = Date::dateSplitSeireki($true_seireki);
+        $true_result = Date::split_ad_date($true_seireki);
         //配列のキーが存在するか
         $this->assertArrayHasKey('year', $true_result);
         $this->assertArrayHasKey('month', $true_result);
@@ -81,15 +81,15 @@ class DateTest extends TestCase
         //値の文字の長さが同じか
 
         //異常系
-        $false_result = Date::dateSplitSeireki($false_seireki);
+        $false_result = Date::split_ad_date($false_seireki);
         //配列が空か
         $this->assertEmpty($false_result);
     }
 
     /**
-     * testDateSplitSeireki用dataProvider
+     * testsplit_ad_date用dataProvider
      */
-    public function valueCheckDateSplitSeireki()
+    public function valueChecksplit_ad_date()
     {
         return [
             'format check1'  => ['2014年05月01日', ''],
@@ -109,9 +109,9 @@ class DateTest extends TestCase
     }
 
     /**
-     * testDateSplitWareki用dataProvider
+     * testsplit_jp_date用dataProvider
      */
-    public function valueCheckDateSplitWareki()
+    public function valueChecksplit_jp_date()
     {
         return [
             'kanji check1'  => ['明治01年01月01日', '明自01年01月01日'],
@@ -135,13 +135,13 @@ class DateTest extends TestCase
     }
 
     /**
-     * @covers Selen\Date::dateSplitWareki
-     * @dataProvider valueCheckDateSplitWareki
+     * @covers Selen\Date::split_jp_date
+     * @dataProvider valueChecksplit_jp_date
      */
-    public function testDateSplitWareki($true_wareki, $false_wareki)
+    public function testSplit_jp_date($true_wareki, $false_wareki)
     {
         //正常系
-        $true_result = Date::dateSplitWareki($true_wareki);
+        $true_result = Date::split_jp_date($true_wareki);
         //配列のキーが存在するか
         $this->assertArrayHasKey('gengo', $true_result);
         $this->assertArrayHasKey('year', $true_result);
@@ -155,39 +155,39 @@ class DateTest extends TestCase
         //値の文字の長さが同じか
 
         //異常系
-        $false_result = Date::dateSplitWareki($false_wareki);
+        $false_result = Date::split_jp_date($false_wareki);
         //配列が空か
         $this->assertEmpty($false_result);
     }
 
     /**
-     * @covers Selen\Date::checkdateFormatSeireki
-     * @dataProvider valueCheckDateSplitSeireki
+     * @covers Selen\Date::is_ad_date_format
+     * @dataProvider valueChecksplit_ad_date
      */
-    public function testCheckdateFormatSeireki($true_seireki, $false_seireki)
+    public function testis_ad_date_format($true_seireki, $false_seireki)
     {
-        $this->assertTrue(Date::checkdateFormatSeireki($true_seireki));
-        $this->assertFalse(Date::checkdateFormatSeireki($false_seireki));
+        $this->assertTrue(Date::is_ad_date_format($true_seireki));
+        $this->assertFalse(Date::is_ad_date_format($false_seireki));
     }
 
     /**
-     * @covers Selen\Date::checkdateFormatWareki
-     * @dataProvider valueCheckDateSplitWareki
+     * @covers Selen\Date::is_jp_date_format
+     * @dataProvider valueChecksplit_jp_date
      */
-    public function testCheckdateFormatWareki($true_wareki, $false_wareki)
+    public function testis_jp_date_format($true_wareki, $false_wareki)
     {
-        $this->assertTrue(Date::checkdateFormatWareki($true_wareki));
-        $this->assertFalse(Date::checkdateFormatWareki($false_wareki));
+        $this->assertTrue(Date::is_jp_date_format($true_wareki));
+        $this->assertFalse(Date::is_jp_date_format($false_wareki));
     }
 
     /**
-     * @covers Selen\Date::checkdateSeireki
-     * @dataProvider valueCheckDateSplitSeireki
+     * @covers Selen\Date::valid_ad_date
+     * @dataProvider valueChecksplit_ad_date
      */
-    public function testCheckdateSeireki($true_seireki, $false_seireki)
+    public function testvalid_ad_date($true_seireki, $false_seireki)
     {
         //正常系
-        $true_result = Date::checkdateSeireki($true_seireki);
+        $true_result = Date::valid_ad_date($true_seireki);
         //配列のキーが存在するか
         $this->assertArrayHasKey('year', $true_result);
         $this->assertArrayHasKey('month', $true_result);
@@ -200,20 +200,20 @@ class DateTest extends TestCase
         //値の文字の長さが同じか
 
         //異常系
-        $false_result = Date::checkdateSeireki($false_seireki);
+        $false_result = Date::valid_ad_date($false_seireki);
         //配列が空か
         $this->assertEmpty($false_result);
     }
 
     /**
-     * @covers Selen\Date::checkdateWareki
-     * @dataProvider valueCheckDateSplitWareki
-     * TODO:   Implement testCheckdateWareki().
+     * @covers Selen\Date::valid_jp_date
+     * @dataProvider valueChecksplit_jp_date
+     * TODO:   Implement testvalid_jp_date().
      */
-    // public function testCheckdateWareki($true_wareki, $false_wareki)
+    // public function testvalid_jp_date($true_wareki, $false_wareki)
     // {
     //     //正常系
-    //     $true_result = Date::checkdateWareki($true_wareki);
+    //     $true_result = Date::valid_jp_date($true_wareki);
     //     //配列のキーが存在するか
     //     $this->assertArrayHasKey('gengo', $true_result);
     //     $this->assertArrayHasKey('year', $true_result);
@@ -227,16 +227,16 @@ class DateTest extends TestCase
     //     //値の文字の長さが同じか
 
     //     //異常系
-    //     $false_result = Date::checkdateWareki($false_wareki);
+    //     $false_result = Date::valid_jp_date($false_wareki);
     //     //配列が空か
     //     $this->assertEmpty($false_result);
     // }
 
     /**
-     * @covers Selen\Date::timeSplit
-     * TODO:   Implement testCheckdateWareki().
+     * @covers Selen\Date::time_split
+     * TODO:   Implement testvalid_jp_date().
      */
-    public function testTimeSplit()
+    public function testtime_split()
     {
         // Remove the following lines when you implement this test.
         $this->markTestIncomplete(
@@ -245,10 +245,10 @@ class DateTest extends TestCase
     }
 
     /**
-     * @covers Selen\Date::convertSeirekiToWreki
-     * TODO:   Implement testConvertSeirekiToWreki().
+     * @covers Selen\Date::ad_date_to_jp_date
+     * TODO:   Implement testad_date_to_jp_date().
      */
-    public function testConvertSeirekiToWreki()
+    public function testad_date_to_jp_date()
     {
         // Remove the following lines when you implement this test.
         $this->markTestIncomplete(
@@ -257,10 +257,10 @@ class DateTest extends TestCase
     }
 
     /**
-     * @covers Selen\Date::convertWarekiToSeireki
-     * TODO:   Implement testConvertWarekiToSeireki().
+     * @covers Selen\Date::jp_date_to_ad_date
+     * TODO:   Implement testjp_date_to_ad_date().
      */
-    public function testConvertWarekiToSeireki()
+    public function testjp_date_to_ad_date()
     {
         // Remove the following lines when you implement this test.
         $this->markTestIncomplete(
@@ -269,20 +269,20 @@ class DateTest extends TestCase
     }
 
     /**
-     * @covers Selen\Date::convertDateToTimestamp
+     * @covers Selen\Date::date_to_timestamp
      */
-    public function testConvertDateToTimestamp()
+    public function testdate_to_timestamp()
     {
         //すべて文字列か
-        $this->assertInternalType('int', Date::convertDateToTimestamp('20140101'));
+        $this->assertInternalType('int', Date::date_to_timestamp('20140101'));
     }
 
     /**
-     * @covers Selen\Date::convertTimestampToDate
+     * @covers Selen\Date::timestamp_to_date
      */
-    public function testConvertTimestampToDate()
+    public function testtimestamp_to_date()
     {
-        $result = Date::convertTimestampToDate(time());
+        $result = Date::timestamp_to_date(time());
         //すべて文字列か
         $this->assertInternalType('string', $result);
         //すべて数字で8桁か
@@ -290,12 +290,12 @@ class DateTest extends TestCase
     }
 
     /**
-     * @covers Selen\Date::getDateInfo
+     * @covers Selen\Date::date_info
      */
-    public function testGetDateInfo()
+    public function testdate_info()
     {
         //正常系
-        $true_result = Date::getDateInfo();
+        $true_result = Date::date_info();
         //配列のキーが存在するか
         $this->assertArrayHasKey('year', $true_result);
         $this->assertArrayHasKey('month', $true_result);
