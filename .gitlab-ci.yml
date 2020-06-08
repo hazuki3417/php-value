@@ -38,7 +38,7 @@ coverage:
     - mkdir -pv ./docs/coverage
     - phpdbg -qrr ./vendor/bin/phpunit -c ./phpunit.xml
 
-documents_php:
+phpdoc:
   only:
     - master
   stage: generate
@@ -51,7 +51,7 @@ documents_php:
     # - git log --max-count=5
 
 
-save_documents:
+documents:
   only:
     - master
   stage: save
